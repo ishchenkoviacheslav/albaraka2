@@ -10,6 +10,23 @@
 
     <p class="text-success" style="font-size:large">Ціна:</p>
     <input class="form-control" type="number" name="product.Price" placeholder="1000$" /><br />
+    
+    <br />
+    <select id="product.Measure" name="product.Measure">
+        <option value="">Одиниці виміру товару</option>
+        <option value="kg">кг.</option>
+        <option value="gramm">грамм</option>
+        <option value="liter">літр</option>
+        <option value="mililiter">мл.</option>
+        <option value="сanister">каністра</option>
+        <option value="box">коробка</option>
+        <option value="bottle">пляшка</option>
+        <option value="packet">пачка</option>
+        <option value="piece">шт.</option>
+        <option value="bag">мішок</option>
+    </select>
+    <br />
+    <br />
 
     <p class="text-success" style="font-size:large">Группи товарів:</p>
     <label>Солодощі </label><input type="checkbox" name="product.Groups.Sweets" value="true" /><br />
@@ -22,9 +39,10 @@
     <label>Східна медицина</label><input type="checkbox" name="product.Groups.EasternMed" value="true" /><br />
     <label>Бакалія</label><input type="checkbox" name="product.Groups.Grocery" value="true" /><br />
 
-
+    <br />
     <p class="text-success" style="font-size:large">Завантажте зображення:</p>
     <input type="file" accept="image/*" name="product.Image" value="product.Image" id="product.Image"/><br />
+    <br />
 
     <input  type="submit" value="Відправити" />
 

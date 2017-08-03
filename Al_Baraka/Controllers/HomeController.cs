@@ -18,53 +18,70 @@ namespace Al_Baraka.Controllers
         {
             return View(pc.Products.ToList());
         }
-        [HttpPost]
-        public IActionResult ShowOneGroup(int num)
+        public IActionResult ShowOneGroup(int idgroup)
         {
-            
-            switch (num)
+            List<Product> result = null;
+            switch (idgroup)
             {
                 case 1:
-
+                    View(pc.Products.ToList());
                     break;
                 case 2:
+                    result = (from p in pc.Products where p.Groups.Sweets == true select p).ToList();
+                    View(result);       
                     break;
 
                 case 3:
-
+                    result = (from p in pc.Products where p.Groups.DriedFruits == true select p).ToList();
+                    View(result);
                     break;
 
                 case 4:
-
+                    result = (from p in pc.Products where p.Groups.Spice == true select p).ToList();
+                    View(result);
                     break;
+
                 case 5:
-
+                    result = (from p in pc.Products where p.Groups.Nuts == true select p).ToList();
+                    View(result);
                     break;
-                case 6:
 
+                case 6:
+                    result = (from p in pc.Products where p.Groups.Oils == true select p).ToList();
+                    View(result);
                     break;
 
                 case 7:
-
+                    result = (from p in pc.Products where p.Groups.Sauces == true select p).ToList();
+                    View(result);
                     break;
 
                 case 8:
-
+                    result = (from p in pc.Products where p.Groups.Italian == true select p).ToList();
+                    View(result);
                     break;
-                case 9:
 
+                case 9:
+                    result = (from p in pc.Products where p.Groups.EasternMed == true select p).ToList();
+                    View(result);
+                    break;
+                case 10:
+                    result = (from p in pc.Products where p.Groups.Grocery == true select p).ToList();
+                    View(result);
                     break;
 
                 default:
-                    throw new Exception("Some error...");
+                    throw new Exception("Fail of group product...");
             }
-
-            return View();
+            return View(null);
         }
         [HttpGet]
-        public IActionResult AddNew()
+        public IActionResult AddNew(string pass)
         {
-            return View();
+            if(pass.ToLower()=="albaraka")
+                return View();
+            else
+                return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -91,10 +108,11 @@ namespace Al_Baraka.Controllers
                     Grocery = product.Groups.Grocery
                 };
                 p.Country = product.Country;
-                p.Desctiption = product.Description;
+                p.Description = product.Description;
                 p.Name = product.Name;
                 p.Price = product.Price;
                 p.Image = byteArray;
+                p.Measure = product.Measure;
                 pc.Products.Add(p);
                 await pc.SaveChangesAsync();
             }
@@ -103,6 +121,12 @@ namespace Al_Baraka.Controllers
         public IActionResult Tips()
         {
             ViewData["Message"] = "Tips";
+
+            return View();
+        }
+        public IActionResult Grocery()
+        {
+            ViewData["Message"] = "Grocery";
 
             return View();
         }
@@ -131,6 +155,18 @@ namespace Al_Baraka.Controllers
             return View();
         }
 
+        public IActionResult Details(int IdProduct)
+        {
+            ViewData["Message"] = "Details.";
+            Product prod = pc.Products.First((p) =>p.Id == IdProduct);
+            if (prod == null)
+                throw new Exception("Product by 'IdProduct' was not found!");
+            return View(prod);
+        }
+        public IActionResult Edit()
+        {
+            return View();
+        }
         public IActionResult Error()
         {
             return View();

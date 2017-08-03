@@ -31,8 +31,29 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Аль Барака</a>
             </div>
             <div class="navbar-collapse collapse">
+                
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Усі товари</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="ShowOneGroup" asp-route-num="1">Усі товари</a></li>*@
+                    <li>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="align-self:center;margin-top:10px; margin-left:5px" asp-action="ShowOneGroup" asp-controller="Home" value="1" name="num">
+                                Усі товари
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Home" asp-action="ShowOneGroup" asp-route-idgroup="1">Усі категорії</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="ShowOneGroup" asp-route-idgroup="2">Солодощі</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="ShowOneGroup" asp-route-idgroup="3">Сухофрукти</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="ShowOneGroup" asp-route-idgroup="4">Спеції</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="ShowOneGroup" asp-route-idgroup="5">Горіхи</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="ShowOneGroup" asp-route-idgroup="6">Олії</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="ShowOneGroup" asp-route-idgroup="7">Соуси</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="ShowOneGroup" asp-route-idgroup="8">Італійська продукція</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="ShowOneGroup" asp-route-idgroup="9">Східна медицина</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="ShowOneGroup" asp-route-idgroup="10">Бакалія</a></li>
+                            </ul>
+                        </div>
+                    </li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Services">Послуги</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Action">Акції</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Cooperation">Співпраця</a></li>

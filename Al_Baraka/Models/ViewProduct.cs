@@ -17,6 +17,7 @@ namespace Al_Baraka.Models
         public string Country { get; set; }
         public IFormFile Image { get; set; }
         public ProductGroups Groups { get; set; }
+        public measure Measure { get; set; }
 
     }
 }
