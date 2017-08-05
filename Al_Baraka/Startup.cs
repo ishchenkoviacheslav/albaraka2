@@ -51,13 +51,57 @@ namespace Al_Baraka
             }
 
             app.UseStaticFiles();
-
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookies",
+                LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            DatabaseInitialize(app.ApplicationServices);
+
+        }
+
+        public void DatabaseInitialize(IServiceProvider serviceProvider)
+        {
+            string adminRoleName = "admin";
+            string userRoleName = "user";
+
+            string adminEmail = "albaraka";
+            string adminPassword = "albaraka";
+
+            using (ProductContext db = serviceProvider.GetRequiredService<ProductContext>())
+            {
+                Role adminRole = db.Roles.FirstOrDefault(x => x.Name == adminRoleName);
+                Role userRole = db.Roles.FirstOrDefault(x => x.Name == userRoleName);
+                // добавляем роли, если их нет
+                if (adminRole == null)
+                {
+                    adminRole = new Role { Name = adminRoleName };
+                    db.Roles.Add(adminRole);
+                }
+                if (userRole == null)
+                {
+                    userRole = new Role { Name = userRoleName };
+                    db.Roles.Add(userRole);
+                }
+                db.SaveChanges();
+
+                // добавляем администратора, если его нет
+                User admin = db.Users.FirstOrDefault(u => u.Email == adminEmail);
+                if (admin == null)
+                {
+                    db.Users.Add(new User { Email = adminEmail, Password = adminPassword, Role = adminRole });
+                    db.SaveChanges();
+                }
+            }
         }
     }
 }

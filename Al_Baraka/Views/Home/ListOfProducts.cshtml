@@ -1,0 +1,14 @@
+﻿@using Al_Baraka.Models;
+@model List<Product>
+<table class="table table-bordered table-hover">
+    <tbody>
+        <tr><th>Ідентифікаційний номер</th><th>Ім'я</th><th>Опис</th><th>Ціна</th><th>Міри виміру</th><th>Країна виробник</th><th>Зображення</th><th>Присутність у группах</th></tr>
+        @foreach (Product p in Model)
+        {
+            var base64 = Convert.ToBase64String(p.Image);
+            var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+            <tr><td>@p.Id</td><td>@p.Name</td><td>@p.Description</td><td>@p.Price</td><td>@p.Measure</td><td>@p.Country</td><td><img src="@imgSrc" alt="" width="100%" /></td><td>@p.Groups</td><td><a asp-area="" asp-controller="Home" asp-action="Edit" asp-route-idproduct="@p.Id">edit</a></td><td><a asp-area="" asp-controller="Home" asp-action="delete" asp-route-idproduct="@p.Id">Delete</a></td></tr>
+        }
+    </tbody>
+</table>
+    

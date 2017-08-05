@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Al_Baraka.Models;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
+
 namespace Al_Baraka.Controllers
 {
     public class HomeController : Controller
@@ -75,15 +77,13 @@ namespace Al_Baraka.Controllers
             }
             return View(null);
         }
+        [Authorize]
         [HttpGet]
-        public IActionResult AddNew(string pass)
+        public IActionResult AddNew()
         {
-            if(pass.ToLower()=="albaraka")
                 return View();
-            else
-                return RedirectToAction("Index", "Home");
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddNew(ViewProduct product)
         {
@@ -163,9 +163,51 @@ namespace Al_Baraka.Controllers
                 throw new Exception("Product by 'IdProduct' was not found!");
             return View(prod);
         }
-        public IActionResult Edit()
+        [Authorize]
+        public IActionResult ListOfProducts()
         {
-            return View();
+            return View(pc.Products.ToList());
+        }
+        [Authorize]
+        [HttpGet]
+        public IActionResult Edit(int idproduct)
+        {
+            Product Editingproduct = pc.Products.First((p) => p.Id == idproduct);
+                if (Editingproduct != null)
+            return View(Editingproduct);
+            throw new Exception("Not find product by id");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Edit(Product EditingProduct)
+        {
+            Product product = pc.Products.SingleOrDefault((s)=> s.Id == EditingProduct.Id);
+            if (product != null)
+            {
+                TryUpdateModelAsync<Product>(product);
+            }
+            return RedirectToAction("listofproducts", "Home");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Delete(int idproduct)
+        {
+            return View(idproduct);
+        }
+        [Authorize]
+        [HttpPost]
+        public IActionResult Delete(int idproduct, string name)
+        {
+            Product product = pc.Products.FirstOrDefault((p) => p.Id == idproduct);
+            if (product != null)
+            {
+                pc.Products.Remove(product);
+                pc.SaveChanges();
+                return RedirectToAction("listofproducts", "Home");
+            }
+            throw new Exception("Not find product by id");
         }
         public IActionResult Error()
         {

@@ -1,17 +1,54 @@
-﻿@{
-    ViewData["Title"] = "Contact";
+﻿@{ 
+    @using Al_Baraka.Models;
+    @model Product
 }
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
+<form enctype="multipart/form-data" method="post">
+    <input type="hidden" name="EditingProduct.Id" value="@Model.Id"/>
+    <p class="text-success" style="font-size:large">Назва товару:</p>
+    <input class="form-control" type="text" name="EditingProduct.Name" value="@Model.Name" /><br />
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+    <p class="text-success" style="font-size:large">Опис товару:</p>
+    <textarea class="form-control" rows="3" name="EditingProduct.Description" value="@Model.Description"></textarea><br />
 
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+    <p class="text-success" style="font-size:large">Країна виробник:</p>
+    <input class="form-control" type="text" name="EditingProduct.Country" value="@Model.Country" /><br />
+
+    <p class="text-success" style="font-size:large">Ціна:</p>
+    <input class="form-control" type="number" name="EditingProduct.Price" value="@Model.Price" /><br />
+
+    <br />
+    <select id="EditingProduct.Measure" name="EditingProduct.Measure">
+        <option value="@Model.Measure.ToString()">@Model.Measure.ToString()</option>
+        <option value="kg">кг.</option>
+        <option value="gramm">грамм</option>
+        <option value="liter">літр</option>
+        <option value="mililiter">мл.</option>
+        <option value="сanister">каністра</option>
+        <option value="box">коробка</option>
+        <option value="bottle">пляшка</option>
+        <option value="packet">пачка</option>
+        <option value="piece">шт.</option>
+        <option value="bag">мішок</option>
+    </select>
+    <br />
+    <br />
+
+    <p class="text-success" style="font-size:large">Группи товарів:</p>
+    <label>Солодощі </label><input type="checkbox" name="EditingProduct.Groups.Sweets" value="@Model.Groups.Sweets" /><br />
+    <label>Сухофрукти</label><input type="checkbox" name="EditingProduct.Groups.DriedFruits" value="@Model.Groups.DriedFruits" /><br />
+    <label>Спеції</label><input type="checkbox" name="EditingProduct.Groups.Spice" value="@Model.Groups.Spice" /><br />
+    <label>Горіхи</label><input type="checkbox" name="EditingProduct.Groups.Nuts" value="@Model.Groups.Nuts" /><br />
+    <label>Олії</label><input type="checkbox" name="EditingProduct.Groups.Oils" value="@Model.Groups.Oils" /><br />
+    <label>соуси</label><input type="checkbox" name="EditingProduct.Groups.Sauces" value="@Model.Groups.Sauces" /><br />
+    <label>Італійська продукція</label><input type="checkbox" name="EditingProduct.Groups.Italian" value="@Model.Groups.Italian" /><br />
+    <label>Східна медицина</label><input type="checkbox" name="EditingProduct.Groups.EasternMed" value="@Model.Groups.EasternMed)" /><br />
+    <label>Бакалія</label><input type="checkbox" name="EditingProduct.Groups.Grocery" value="@Model.Groups.Grocery" /><br />
+
+    <br />
+    <p class="text-success" style="font-size:large">Завантажте зображення(якщо ви хочете видалити попереднє зображення, просто завантажте нове) :</p>
+    <input type="file" accept="image/*" name="EditingProduct.Image" value="EditingProduct.Image" id="EditingProduct.Image" /><br />
+    <br />
+
+    <input type="submit" value="Відправити" />
+
+</form>
