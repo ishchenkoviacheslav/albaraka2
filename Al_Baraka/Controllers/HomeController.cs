@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Al_Baraka.Models;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
-
+using Microsoft.EntityFrameworkCore;
 namespace Al_Baraka.Controllers
 {
     public class HomeController : Controller
@@ -88,14 +88,16 @@ namespace Al_Baraka.Controllers
         public async Task<IActionResult> AddNew(ViewProduct product)
         {
             Product p = new Product();
+            byte[] byteArray = null;
             if (product.Image != null)
             {
-                byte[] byteArray = null;
                 using (BinaryReader reader = new BinaryReader(product.Image.OpenReadStream()))
                 {
                     byteArray = reader.ReadBytes((int)product.Image.Length);
                 }
-                p.Groups = new ProductGroups()
+            }
+
+            p.Groups = new ProductGroups()
                 {
                     DriedFruits = product.Groups.DriedFruits,
                     EasternMed = product.Groups.EasternMed,
@@ -115,8 +117,7 @@ namespace Al_Baraka.Controllers
                 p.Measure = product.Measure;
                 pc.Products.Add(p);
                 await pc.SaveChangesAsync();
-            }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("listofproducts", "Home");
         }
         public IActionResult Tips()
         {
@@ -172,7 +173,7 @@ namespace Al_Baraka.Controllers
         [HttpGet]
         public IActionResult Edit(int idproduct)
         {
-            Product Editingproduct = pc.Products.First((p) => p.Id == idproduct);
+            Product Editingproduct = pc.Products.Include((p) => p.Groups).Where(p =>p.Id==idproduct).FirstOrDefault();
                 if (Editingproduct != null)
             return View(Editingproduct);
             throw new Exception("Not find product by id");
@@ -180,12 +181,38 @@ namespace Al_Baraka.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(Product EditingProduct)
+        public IActionResult Edit(ViewProduct EditingProduct)
         {
-            Product product = pc.Products.SingleOrDefault((s)=> s.Id == EditingProduct.Id);
+            Product product = pc.Products.Include(p=>p.Groups).SingleOrDefault((s)=> s.Id == EditingProduct.Id);
+            
             if (product != null)
             {
+                byte[] byteArray = null;
+                if (EditingProduct.Image != null)
+                {
+                    using (BinaryReader reader = new BinaryReader(EditingProduct.Image.OpenReadStream()))
+                    {
+                        byteArray = reader.ReadBytes((int)EditingProduct.Image.Length);
+                    }
+                    product.Image = byteArray;
+                }
+                product.Name = EditingProduct.Name;
+                product.Description = EditingProduct.Description;
+                product.Country = EditingProduct.Country;
+                product.Measure = EditingProduct.Measure;
+                product.Price = EditingProduct.Price;
+                product.Groups.DriedFruits = EditingProduct.Groups.DriedFruits;
+                product.Groups.EasternMed = EditingProduct.Groups.EasternMed;
+                product.Groups.Grocery = EditingProduct.Groups.Grocery;
+                product.Groups.Italian = EditingProduct.Groups.Italian;
+                product.Groups.Nuts = EditingProduct.Groups.Nuts;
+                product.Groups.Oils = EditingProduct.Groups.Oils;
+                product.Groups.Sauces = EditingProduct.Groups.Sauces;
+                product.Groups.Spice = EditingProduct.Groups.Spice;
+                product.Groups.Sweets = EditingProduct.Groups.Sweets;
+               
                 TryUpdateModelAsync<Product>(product);
+                pc.SaveChanges();
             }
             return RedirectToAction("listofproducts", "Home");
         }

@@ -33,7 +33,7 @@ namespace Al_Baraka.Controllers
                 {
                     await Authenticate(model.Email); // аутентификация
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("listofproducts", "Home");
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
