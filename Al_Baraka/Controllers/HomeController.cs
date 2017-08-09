@@ -30,7 +30,7 @@ namespace Al_Baraka.Controllers
                     break;
                 case 2:
                     result = (from p in pc.Products where p.Groups.Sweets == true select p).ToList();
-                    View(result);       
+                    View(result);
                     break;
 
                 case 3:
@@ -81,7 +81,7 @@ namespace Al_Baraka.Controllers
         [HttpGet]
         public IActionResult AddNew()
         {
-                return View();
+            return View();
         }
         [Authorize]
         [HttpPost]
@@ -98,25 +98,31 @@ namespace Al_Baraka.Controllers
             }
 
             p.Groups = new ProductGroups()
-                {
-                    DriedFruits = product.Groups.DriedFruits,
-                    EasternMed = product.Groups.EasternMed,
-                    Italian = product.Groups.Italian,
-                    Nuts = product.Groups.Nuts,
-                    Oils = product.Groups.Oils,
-                    Sauces = product.Groups.Sauces,
-                    Spice = product.Groups.Spice,
-                    Sweets = product.Groups.Sweets,
-                    Grocery = product.Groups.Grocery
-                };
-                p.Country = product.Country;
-                p.Description = product.Description;
-                p.Name = product.Name;
-                p.Price = product.Price;
-                p.Image = byteArray;
-                p.Measure = product.Measure;
-                pc.Products.Add(p);
-                await pc.SaveChangesAsync();
+            {
+                DriedFruits = product.Groups.DriedFruits,
+                EasternMed = product.Groups.EasternMed,
+                Italian = product.Groups.Italian,
+                Nuts = product.Groups.Nuts,
+                Oils = product.Groups.Oils,
+                Sauces = product.Groups.Sauces,
+                Spice = product.Groups.Spice,
+                Sweets = product.Groups.Sweets,
+                Grocery = product.Groups.Grocery
+            };
+            p.Country = product.Country;
+            p.Description = product.Description;
+            p.Name = product.Name;
+            p.Price = product.Price;
+            p.Image = byteArray;
+            p.Measure = product.Measure;
+
+            pc.Products.Add(p);
+            //pc.SaveChanges();
+
+            //p.Groups.ProductId = p.Id;
+            pc.ProductGroups.Add(p.Groups);
+            pc.SaveChanges();
+
             return RedirectToAction("listofproducts", "Home");
         }
         public IActionResult Tips()
@@ -159,7 +165,7 @@ namespace Al_Baraka.Controllers
         public IActionResult Details(int IdProduct)
         {
             ViewData["Message"] = "Details.";
-            Product prod = pc.Products.First((p) =>p.Id == IdProduct);
+            Product prod = pc.Products.First((p) => p.Id == IdProduct);
             if (prod == null)
                 throw new Exception("Product by 'IdProduct' was not found!");
             return View(prod);
@@ -173,9 +179,9 @@ namespace Al_Baraka.Controllers
         [HttpGet]
         public IActionResult Edit(int idproduct)
         {
-            Product Editingproduct = pc.Products.Include((p) => p.Groups).Where(p =>p.Id==idproduct).FirstOrDefault();
-                if (Editingproduct != null)
-            return View(Editingproduct);
+            Product Editingproduct = pc.Products.Include((p) => p.Groups).Where(p => p.Id == idproduct).FirstOrDefault();
+            if (Editingproduct != null)
+                return View(Editingproduct);
             throw new Exception("Not find product by id");
         }
 
@@ -183,8 +189,8 @@ namespace Al_Baraka.Controllers
         [HttpPost]
         public IActionResult Edit(ViewProduct EditingProduct)
         {
-            Product product = pc.Products.Include(p=>p.Groups).SingleOrDefault((s)=> s.Id == EditingProduct.Id);
-            
+            Product product = pc.Products.Include(p => p.Groups).SingleOrDefault((s) => s.Id == EditingProduct.Id);
+
             if (product != null)
             {
                 byte[] byteArray = null;
@@ -210,7 +216,7 @@ namespace Al_Baraka.Controllers
                 product.Groups.Sauces = EditingProduct.Groups.Sauces;
                 product.Groups.Spice = EditingProduct.Groups.Spice;
                 product.Groups.Sweets = EditingProduct.Groups.Sweets;
-               
+
                 TryUpdateModelAsync<Product>(product);
                 pc.SaveChanges();
             }
@@ -227,7 +233,7 @@ namespace Al_Baraka.Controllers
         [HttpPost]
         public IActionResult Delete(int idproduct, string name)
         {
-            Product product = pc.Products.FirstOrDefault((p) => p.Id == idproduct);
+            Product product = pc.Products.Include(p => p.Groups).FirstOrDefault((p) => p.Id == idproduct);
             if (product != null)
             {
                 pc.Products.Remove(product);

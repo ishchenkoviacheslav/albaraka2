@@ -20,6 +20,9 @@ namespace Al_Baraka.Models
         public bool Italian { get; set; }
         public bool EasternMed { get; set; }
         public bool Grocery { get; set; }
+
+        public int ProductId { get; set; }
+        public Product ProductForGroups { get; set; }
     }
 }
 
