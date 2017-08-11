@@ -171,9 +171,19 @@ namespace Al_Baraka.Controllers
             return View(prod);
         }
         [Authorize]
+        [HttpGet]
         public IActionResult ListOfProducts()
         {
-            return View(pc.Products.ToList());
+            return View(pc.Products.Include(g=>g.Groups).ToList());
+        }
+        [Authorize]
+        [HttpPost]
+        public IActionResult ListOfProducts(string searchPattern)
+        {
+            if (searchPattern == null)
+                searchPattern = "";
+            List<Product> result = (from p in pc.Products where p.Name.ToLower().Contains(searchPattern.ToLower()) || p.Id.ToString() == searchPattern select p).Include(p=>p.Groups).ToList();
+            return View(result);
         }
         [Authorize]
         [HttpGet]
