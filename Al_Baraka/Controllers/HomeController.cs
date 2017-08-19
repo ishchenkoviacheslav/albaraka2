@@ -18,7 +18,45 @@ namespace Al_Baraka.Controllers
         }
         public IActionResult Index()
         {
-            return View(pc.Products.ToList());
+            List<List<Product>> AllGroups = new List<List<Product>>();
+
+            List<Product> group0 = new List<Product>();
+            group0 = (from g in pc.Products.Include(g => g.Groups).ToList() where g.Groups.DriedFruits == true select g).ToList();
+            AllGroups.Add(group0);
+
+            List<Product> group1 = new List<Product>();
+            group1 = (from g in pc.Products.Include(g => g.Groups).ToList() where g.Groups.EasternMed == true select g).ToList();
+            AllGroups.Add(group1);
+
+            List<Product> group2 = new List<Product>();
+            group2 = (from g in pc.Products.Include(g => g.Groups).ToList() where g.Groups.Grocery == true select g).ToList();
+            AllGroups.Add(group2);
+
+            List<Product> group3 = new List<Product>();
+            group3 = (from g in pc.Products.Include(g => g.Groups).ToList() where g.Groups.Italian == true select g).ToList();
+            AllGroups.Add(group3);
+
+            List<Product> group4 = new List<Product>();
+            group4 = (from g in pc.Products.Include(g => g.Groups).ToList() where g.Groups.Nuts == true select g).ToList();
+            AllGroups.Add(group4);
+
+            List<Product> group5 = new List<Product>();
+            group5 = (from g in pc.Products.Include(g => g.Groups).ToList() where g.Groups.Oils == true select g).ToList();
+            AllGroups.Add(group5);
+
+            List<Product> group6 = new List<Product>();
+            group6 = (from g in pc.Products.Include(g => g.Groups).ToList() where g.Groups.Sauces == true select g).ToList();
+            AllGroups.Add(group6);
+
+            List<Product> group7 = new List<Product>();
+            group7 = (from g in pc.Products.Include(g => g.Groups).ToList() where g.Groups.Spice == true select g).ToList();
+            AllGroups.Add(group7);
+
+            List<Product> group8 = new List<Product>();
+            group8 = (from g in pc.Products.Include(g => g.Groups).ToList() where g.Groups.Sweets == true select g).ToList();
+            AllGroups.Add(group8);
+
+            return View(AllGroups);
         }
         public IActionResult ShowOneGroup(int idgroup)
         {
