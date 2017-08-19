@@ -1,65 +1,146 @@
 ﻿@using Al_Baraka.Models;
-@model List<Product>
+@model List<List<Product>>
 
-@*<form>
-        <button asp-action="Contact" asp-controller="Home">log in</button>
-    </form>*@
-@*<form method="post">
-        <p>
-            <button class="btn btn-primary btn-lg" style="width:100%" asp-action="ShowOneGroup" asp-controller="Home" value="1" name="num">Усі товарі</button>
-        </p>
-        <p>
-            <button class="btn btn-primary btn-lg" style="width:100%" asp-action="ShowOneGroup" asp-controller="Home" value="2" name="num">Солодощі</button>
-        </p>
-        <p>
-            <button class="btn btn-primary btn-lg" style="width:100%" asp-action="ShowOneGroup" asp-controller="Home" value="3" name="num">Сухофрукти</button>
-        </p>
-        <p>
-            <button class="btn btn-primary btn-lg" style="width:100%" asp-action="ShowOneGroup" asp-controller="Home" value="4" name="num">Спеції</button>
-        </p>
-        <p>
-            <button class="btn btn-primary btn-lg" style="width:100%" asp-action="ShowOneGroup" asp-controller="Home" value="5" name="num">Горіхи</button>
-        </p>
-        <p>
-            <button class="btn btn-primary btn-lg" style="width:100%" asp-action="ShowOneGroup" asp-controller="Home" value="6" name="num">Олії</button>
-        </p>
-        <p>
-            <button class="btn btn-primary btn-lg" style="width:100%" asp-action="ShowOneGroup" asp-controller="Home" value="7" name="num">Соуси</button>
-        </p>
-        <p>
-            <button class="btn btn-primary btn-lg" style="width:100%" asp-action="ShowOneGroup" asp-controller="Home" value="8" name="num">Італійська продукція</button>
-        </p>
-        <p>
-            <button class="btn btn-primary btn-lg" style="width:100%" asp-action="ShowOneGroup" asp-controller="Home" value="9" name="num">Східна медицина</button>
-        </p>
-    </form>*@
-<section id="posts" class="page-section">
-    <div class="container">
-        <div class="row">
-            <br />
-            @for (int i = 0; i < @Model.Count; i++)
-            {
-                var base64 = Convert.ToBase64String(Model[i].Image);
-                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+    <div id="amazingcarousel-container-1" style="padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px">
+        <div id="amazingcarousel-1" style="display:none;position:relative;width:100%;margin:0px;">
+            <div class="amazingcarousel-list-container">
+                <ul class="amazingcarousel-list">
 
-                <div class="col-md-3 col-sm-6">
-                    <div class="post-inside">
-                        <div class="post-thumb">
-                            <a asp-area="" asp-controller="Home" asp-action="Details" asp-route-IdProduct="@Model[i].Id">
-                                <img src="@imgSrc" alt="" width="100%" />
-                            </a>
-                        </div>
-                        <div class="post-content">
-                            <h5><a asp-area="" asp-controller="Home" asp-action="Details" asp-route-IdProduct="@Model[i].Id" >@Model[i].Name </a></h5>
+                    @for (int i = 0; i < Model[0].Count; i++)
+                    {
+                        var base64 = Convert.ToBase64String(Model[0][i].Image);
+                        var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+                        <li class="amazingcarousel-item">
+                            <div class="amazingcarousel-item-container">
+                                <div class="amazingcarousel-image">
+                                    <a asp-area="" asp-controller="Home" asp-action="Details" asp-route-IdProduct="@Model[0][i].Id">
+                                        <img src="@imgSrc" />
+                                    </a>
+                                </div>
+                                <h5><a asp-area="" asp-controller="Home" asp-action="Details" asp-route-IdProduct="@Model[0][i].Id"> @Model[0][i].Name </a></h5>
+                                @*<div class="amazingcarousel-title">@Model[0][i].Name</div>*@
+                                <div class="amazingcarousel-description">
+                                    <p class="text-danger">
+                                        Ціна: @Model[0][i].Price за
+                                        @switch (Model[0][i].Measure)
+                                        {
+                                            case measure.kg:
+                                                <text>кг.</text>
+                                                break;
+                                            case measure.gramm:
+                                                <text>гр.</text>
+                                                break;
+                                            case measure.liter:
+                                                <text>літр</text>
+                                                break;
+                                            case measure.mililiter:
+                                                <text>мл.</text>
+                                                break;
+                                            case measure.сanister:
+                                                <text>каністру</text>
+                                                break;
+                                            case measure.box:
+                                                <text>коробку</text>
+                                                break;
+                                            case measure.bottle:
+                                                <text>пляшку</text>
+                                                break;
+                                            case measure.packet:
+                                                <text>пачку</text>
+                                                break;
+                                            case measure.piece:
+                                                <text>шт.</text>
+                                                break;
+                                            case measure.bag:
+                                                <text>мішок</text>
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    </p>
+                                </div>
+                                <p>@Model[0][i].Description.Substring(0, (Model[0][i].Description.Length > 27 ? 27 : Model[0][i].Description.Length)) ..</p>
+                                @*<div class="amazingcarousel-readmore"><a href="~/images/_vyr_40olivki-zelenye-s-kostochkojj-Vittoria-Giganti-italija-500-hr-lightbox.jpg" target="__TARGET__">Read More</a></div>*@
+                            </div>
+                        </li>
+                    }
 
-                            <p>@Model[i].Description.Substring(0, (Model[i].Description.Length > 30 ? 30 : Model[i].Description.Length)) ..</p>
-                        </div>
-                    </div>
-                </div>
-            }
+                </ul>
+                <div class="amazingcarousel-prev"></div>
+                <div class="amazingcarousel-next"></div>
+            </div>
         </div>
     </div>
-</section>
+
+@*<section id="posts" class="page-section">
+        <div class="container">
+            <div class="row">
+                <br />
+                <div class="Carousel" data-items="1,3,5,6" data-slide="1" id="ResSlid1">
+                    <div class="Carousel-inner">
+                        @for (int i = 0; i < @Model.Count; i++)
+                {
+                    var base64 = Convert.ToBase64String(Model[i].Image);
+                    var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+                            <div class="item">
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="post-inside">
+                                        <div class="post-thumb">
+                                            <a asp-area="" asp-controller="Home" asp-action="Details" asp-route-IdProduct="@Model[i].Id">
+                                                <img src="@imgSrc" alt="" width="100%" />
+                                            </a>
+                                        </div>
+                                        <div class="post-content">
+                                            <h5><a asp-area="" asp-controller="Home" asp-action="Details" asp-route-IdProduct="@Model[i].Id">@Model[i].Name </a></h5>
+                                            <p class="text-danger">
+                                                Ціна: @Model[i].Price за
+                                                @switch (Model[i].Measure)
+                                                {
+                                                    case measure.kg:
+                                                        <text>кг.</text>
+                                                        break;
+                                                    case measure.gramm:
+                                                        <text>гр.</text>
+                                                        break;
+                                                    case measure.liter:
+                                                        <text>літр</text>
+                                                        break;
+                                                    case measure.mililiter:
+                                                        <text>мл.</text>
+                                                        break;
+                                                    case measure.сanister:
+                                                        <text>каністру</text>
+                                                        break;
+                                                    case measure.box:
+                                                        <text>коробку</text>
+                                                        break;
+                                                    case measure.bottle:
+                                                        <text>пляшку</text>
+                                                        break;
+                                                    case measure.packet:
+                                                        <text>пачку</text>
+                                                        break;
+                                                    case measure.piece:
+                                                        <text>шт.</text>
+                                                        break;
+                                                    case measure.bag:
+                                                        <text>мішок</text>
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
+                                            </p>
+                                            <p>@Model[i].Description.Substring(0, (Model[i].Description.Length > 30 ? 30 : Model[i].Description.Length)) ..</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>*@
 
 @*
 
