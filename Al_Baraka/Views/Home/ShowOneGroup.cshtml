@@ -1,6 +1,77 @@
 ﻿@using Al_Baraka.Models;
 @model List<Product>
+@{
+//int sweets = 0;
+//int driedfruits = 0;
+//int spice = 0;
+//int nuts = 0;
+//int oils = 0;
+//int sauces = 0;
+//int italian = 0;
+//int easternmed = 0;
+//int grocery = 0;
 
+//foreach (Product p in Model)
+//{
+
+
+//    switch (p.Groups.ToString())
+//    {
+//        case "Sweets": sweets++; break;
+//        case "DriedFruits": driedfruits++; break;
+//        case "Spice":  spice++; break;
+//        case "Nuts": nuts++; break;
+//        case "Oils": oils++; break;
+//        case "Sauces": sauces++; break;
+//        case "Italian": italian++;break;
+//        case "EasternMed": easternmed++;break;
+//        case "Grocery": grocery++; break;
+//        default:
+//            break;
+//    }
+//}
+}
+@if (Model.Count != 0)
+{
+    @*if (sweets>=driedfruits && sweets>=spice && sweets>=nuts && sweets>=oils && sweets>=sauces && sweets>=italian && sweets>=easternmed && sweets>=grocery)
+    {
+        <h1>Солодощі</h1>
+    }
+
+    if (driedfruits>=sweets && driedfruits>=spice && driedfruits>=nuts && driedfruits>=oils && driedfruits>=sauces && driedfruits>=italian && driedfruits>=easternmed && driedfruits>=grocery)
+    {
+        <h1>Сухофрукти</h1>
+    }
+    if (spice>=sweets && spice>=driedfruits && spice>=nuts && spice>=oils && spice>=sauces && spice>=italian && spice>=easternmed && spice>=grocery)
+    {
+        <h1>Спеції</h1>
+    }
+    if (nuts>=sweets && nuts>=driedfruits && nuts>=spice && nuts>=oils && nuts>=sauces && nuts>=italian && nuts>=easternmed && nuts>=grocery)
+    {
+        <h1>Горіхи</h1>
+    }
+    if (oils>=sweets && oils>=driedfruits && oils>=spice && oils>=nuts && oils>=sauces && oils>=italian && oils>=easternmed && oils>=grocery)
+    {
+        <h1>Олії</h1>
+    }
+    if (sauces> sweets && sauces>=driedfruits && sauces>=spice && sauces>=nuts && sauces>=oils && sauces>=italian && sauces>=easternmed && sauces>=grocery)
+    {
+        <h1>Соуси</h1>
+    }
+    if (italian>=sweets && italian>=driedfruits && italian>=spice && italian>=nuts && italian>=oils && italian>=sauces && italian>=easternmed && italian>=grocery)
+    {
+        <h1>Італійська продукція</h1>
+    }
+    if (easternmed>=sweets && easternmed> driedfruits && easternmed> spice && easternmed>=nuts && easternmed> oils && easternmed> sauces && easternmed >=italian && easternmed>=grocery)
+    {
+        <h1>Східна медицина</h1>
+    }
+    if (grocery> sweets && grocery>=driedfruits && grocery>=spice && grocery>=nuts && grocery>=oils && grocery>=sauces && grocery>=italian && grocery>=easternmed)
+    {
+        <h1>Бакалія</h1>
+    }*@
+
+}
    <section id="posts" class="page-section">
     <div class="container">
         <div class="row">

@@ -23,6 +23,28 @@ namespace Al_Baraka.Models
 
         public int ProductId { get; set; }
         public Product ProductForGroups { get; set; }
+        public override string ToString()
+        {
+            if (Sweets)
+                return "Sweets";
+            if (DriedFruits)
+                return "DriedFruits";
+            if (Spice)
+                return "Spice";
+            if (Nuts)
+                return "Nuts";
+            if (Oils)
+                return "Oils";
+            if (Sauces)
+                return "Sauces";
+            if (Italian)
+                return "Italian";
+            if (EasternMed)
+                return "EasternMed";
+            if (Grocery)
+                return "Grocery";
+            return base.ToString();
+        }
     }
 }
 

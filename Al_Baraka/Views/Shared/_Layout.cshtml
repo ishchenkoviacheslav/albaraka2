@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
 
-        <link rel="stylesheet" type="text/css" href="~/carouselengine/initcarousel-1.css">
+        @*<link rel="stylesheet" type="text/css" href="~/carouselengine/initcarousel-1.css">*@
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -23,7 +23,7 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 
 
-        <link rel="stylesheet" type="text/css" href="~/carouselengine/initcarousel-1.css">
+        @*<link rel="stylesheet" type="text/css" href="~/carouselengine/initcarousel-1.css">*@
 
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
@@ -31,7 +31,7 @@
 <body style="padding-top:0px;margin-right:15px;margin-left:1px;">
     <div class="row">
         <div class="col-md-3">
-            <img src="~/images/b_big_slogan.png" width="100%"/>
+            <a href="~/Home"><img src="~/images/b_big_slogan.png" width="100%" /></a>
         </div>
         <div class="col-md-3" style="font-size:x-large">
             <br />
@@ -42,9 +42,9 @@
         <div class="col-md-6">
             <br />
 
-            <form class="form-inline">
+            <form class="form-inline" asp-controller="Home" asp-action="Index" formmethod="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="" placeholder="назва або номер">
+                    <input type="text" class="form-control" id="searchPattern" name="searchPattern" placeholder="назва або номер">
                 </div>
                 <button type="submit" class="btn btn-default">Знайти</button>
             </form>
@@ -110,8 +110,8 @@
             <script src="~/js/site.js" asp-append-version="true"></script>
 
             @*<script src="~/carouselengine/jquery.js"></script>*@
-            <script src="~/carouselengine/amazingcarousel.js"></script>
-            <script src="~/carouselengine/initcarousel-1.js"></script>
+            @*<script src="~/carouselengine/amazingcarousel.js"></script>*@
+            @*<script src="~/carouselengine/initcarousel-1.js"></script>*@
         </environment>
         <environment names="Staging,Production">
             <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -129,8 +129,8 @@
             <script src="~/js/site.min.js" asp-append-version="true"></script>
 
             @*<script src="~/carouselengine/jquery.js"></script>*@
-            <script src="~/carouselengine/amazingcarousel.js"></script>
-            <script src="~/carouselengine/initcarousel-1.js"></script>
+            @*<script src="~/carouselengine/amazingcarousel.js"></script>*@
+            @*<script src="~/carouselengine/initcarousel-1.js"></script>*@
         </environment>
 
         @RenderSection("Scripts", required: false)

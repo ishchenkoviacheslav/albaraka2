@@ -16,6 +16,7 @@ namespace Al_Baraka.Controllers
         {
             pc = prodCont;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             List<List<Product>> AllGroups = new List<List<Product>>();
@@ -58,55 +59,100 @@ namespace Al_Baraka.Controllers
 
             return View(AllGroups);
         }
+        [HttpPost]
+        public IActionResult Index(string searchPattern)
+        {
+            List<Product> result = (from p in pc.Products where p.Name.ToLower().Contains(searchPattern.ToLower()) || p.Id.ToString() == searchPattern select p).Include(p => p.Groups).ToList();
+            List<List<Product>> AllGroups = new List<List<Product>>();
+
+            List<Product> group0 = new List<Product>();
+            group0 = (from g in result where g.Groups.DriedFruits == true select g).ToList();
+            AllGroups.Add(group0);
+
+            List<Product> group1 = new List<Product>();
+            group1 = (from g in result where g.Groups.EasternMed == true select g).ToList();
+            AllGroups.Add(group1);
+
+            List<Product> group2 = new List<Product>();
+            group2 = (from g in result where g.Groups.Grocery == true select g).ToList();
+            AllGroups.Add(group2);
+
+            List<Product> group3 = new List<Product>();
+            group3 = (from g in result where g.Groups.Italian == true select g).ToList();
+            AllGroups.Add(group3);
+
+            List<Product> group4 = new List<Product>();
+            group4 = (from g in result where g.Groups.Nuts == true select g).ToList();
+            AllGroups.Add(group4);
+
+            List<Product> group5 = new List<Product>();
+            group5 = (from g in result where g.Groups.Oils == true select g).ToList();
+            AllGroups.Add(group5);
+
+            List<Product> group6 = new List<Product>();
+            group6 = (from g in result where g.Groups.Sauces == true select g).ToList();
+            AllGroups.Add(group6);
+
+            List<Product> group7 = new List<Product>();
+            group7 = (from g in result where g.Groups.Spice == true select g).ToList();
+            AllGroups.Add(group7);
+
+            List<Product> group8 = new List<Product>();
+            group8 = (from g in result where g.Groups.Sweets == true select g).ToList();
+            AllGroups.Add(group8);
+            
+            return View(AllGroups);
+
+        }
         public IActionResult ShowOneGroup(int idgroup)
         {
             List<Product> result = null;
             switch (idgroup)
             {
                 case 1:
-                    View(pc.Products.ToList());
+                    View(pc.Products.Include(g => g.Groups).ToList());
                     break;
                 case 2:
-                    result = (from p in pc.Products where p.Groups.Sweets == true select p).ToList();
+                    result = (from p in pc.Products where p.Groups.Sweets == true select p).Include(g=>g.Groups).ToList();
                     View(result);
                     break;
 
                 case 3:
-                    result = (from p in pc.Products where p.Groups.DriedFruits == true select p).ToList();
+                    result = (from p in pc.Products where p.Groups.DriedFruits == true select p).Include(g => g.Groups).ToList();
                     View(result);
                     break;
 
                 case 4:
-                    result = (from p in pc.Products where p.Groups.Spice == true select p).ToList();
+                    result = (from p in pc.Products where p.Groups.Spice == true select p).Include(g => g.Groups).ToList();
                     View(result);
                     break;
 
                 case 5:
-                    result = (from p in pc.Products where p.Groups.Nuts == true select p).ToList();
+                    result = (from p in pc.Products where p.Groups.Nuts == true select p).Include(g => g.Groups).ToList();
                     View(result);
                     break;
 
                 case 6:
-                    result = (from p in pc.Products where p.Groups.Oils == true select p).ToList();
+                    result = (from p in pc.Products where p.Groups.Oils == true select p).Include(g => g.Groups).ToList();
                     View(result);
                     break;
 
                 case 7:
-                    result = (from p in pc.Products where p.Groups.Sauces == true select p).ToList();
+                    result = (from p in pc.Products where p.Groups.Sauces == true select p).Include(g => g.Groups).ToList();
                     View(result);
                     break;
 
                 case 8:
-                    result = (from p in pc.Products where p.Groups.Italian == true select p).ToList();
+                    result = (from p in pc.Products where p.Groups.Italian == true select p).Include(g => g.Groups).ToList();
                     View(result);
                     break;
 
                 case 9:
-                    result = (from p in pc.Products where p.Groups.EasternMed == true select p).ToList();
+                    result = (from p in pc.Products where p.Groups.EasternMed == true select p).Include(g => g.Groups).ToList();
                     View(result);
                     break;
                 case 10:
-                    result = (from p in pc.Products where p.Groups.Grocery == true select p).ToList();
+                    result = (from p in pc.Products where p.Groups.Grocery == true select p).Include(g => g.Groups).ToList();
                     View(result);
                     break;
 
